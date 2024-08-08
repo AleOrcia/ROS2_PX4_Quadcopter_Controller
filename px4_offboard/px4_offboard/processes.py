@@ -14,7 +14,7 @@ commands = [
     "cd ~/PX4-Autopilot && make px4_sitl gz_x500"
 
     # Run QGroundControl
-    # "cd ~/QGroundControl && ./QGroundControl.AppImage"
+    "cd ~/QGroundControl && ./QGroundControl.AppImage"
 ]
 
 # Loop through each command in the list
