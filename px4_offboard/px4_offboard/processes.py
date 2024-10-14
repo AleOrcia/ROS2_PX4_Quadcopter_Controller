@@ -19,7 +19,7 @@ commands = [
 ]
 
 # Default terminal command on Ubuntu
-terminal_cmd = 'x-terminal-emulator'
+terminal_cmd = 'gnome-terminal'
 
 # Loop through each command in the list
 for command in commands:
