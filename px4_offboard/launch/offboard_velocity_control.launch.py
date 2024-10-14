@@ -58,14 +58,14 @@ def generate_launch_description():
             namespace='px4_offboard',
             executable='processes',
             name='processes',
-            prefix='x-terminal-emulator --'
+            prefix='gnome-terminal --'
         ),
         Node(
             package='px4_offboard',
             namespace='px4_offboard',
             executable='control',
             name='control',
-            prefix='x-terminal-emulator --',
+            prefix='gnome-terminal --',
         ),
         Node(
             package='px4_offboard',
