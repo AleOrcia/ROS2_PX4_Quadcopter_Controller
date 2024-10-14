@@ -21,7 +21,6 @@ commands = [
 # Default terminal command on Ubuntu
 terminal_cmd = 'gnome-terminal'
 
-# Loop through each command in the list
 for command in commands:
     # Build the full command
     full_cmd = [terminal_cmd, '-e', f"bash -c '{command}; exec bash'"]
