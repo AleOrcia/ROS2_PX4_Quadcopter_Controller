@@ -14,7 +14,7 @@ def generate_launch_description():
             ]),
 
             # PX4 simulator + Gazebo
-            ExecuteProcess(name="PX4", cmd=["HEADLESS=1" ,"make", "-C", "/home/user_thesis/PX4-Autopilot", "px4_sitl", "gz_x500"], prefix="gnome-terminal --", shell=True),
+            ExecuteProcess(name="PX4", cmd=["make", "-C", "/home/user_thesis/PX4-Autopilot", "HEADLESS=1", "px4_sitl", "gz_x500"], prefix="gnome-terminal --", shell=True),
 
             # WebSocket server su porta 9090
             Node(package="rosbridge_server", executable="rosbridge_websocket", name="rosbridge"),
