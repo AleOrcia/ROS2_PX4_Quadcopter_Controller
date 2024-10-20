@@ -22,10 +22,10 @@ def generate_launch_description():
             # Terminale di controllo
             Node(package="px4_offboard", executable="control", prefix="gnome-terminal --", name="term_controller"),
             
-            # Bridge tra /fcu e il terminale di controllo
+            # Bridge tra /fmu e il terminale di controllo
             Node(package="px4_offboard", executable="velocity_control", name="velocity_controller"),
 
-            # Bridge tra /fcu e /px4_visualizer. Traduce i messaggi da PX4 a ROS2
+            # Bridge tra /fmu e /px4_visualizer. Traduce i messaggi da PX4 a ROS2
             Node(package="px4_offboard", executable="visualizer"),
 
             # RVIZ2 Visualizer
