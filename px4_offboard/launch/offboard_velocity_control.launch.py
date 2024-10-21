@@ -1,7 +1,10 @@
 from launch import LaunchDescription
 from launch_ros.actions import Node
 from launch.actions import ExecuteProcess
+import os
 
+dev_name = os.getenv('DEV_NAME')  # user_thesis
+ws_name = os.getenv('WS_NAME')    # docker_ws
 
 def generate_launch_description():
     nodes = [
@@ -14,13 +17,16 @@ def generate_launch_description():
             ]),
 
             # PX4 simulator + Gazebo
-            ExecuteProcess(name="PX4", cmd=["make", "-C", "/home/user_thesis/PX4-Autopilot", "HEADLESS=1", "px4_sitl", "gz_x500"], prefix="gnome-terminal --", shell=True),
-
+            ExecuteProcess(
+                name="PX4",
+                cmd=["make", "-C", os.path.join('/home', os.getenv('DEV_NAME'), 'PX4-Autopilot'), "HEADLESS=1", "px4_sitl", "gz_x500"], prefix="gnome-terminal --", shell=True
+            ),
+        
             # WebSocket server su porta 9090
             Node(package="rosbridge_server", executable="rosbridge_websocket", name="rosbridge"),
 
             # Terminale di controllo
-            Node(package="px4_offboard", executable="control", prefix="gnome-terminal --", name="term_controller"),
+            Node(package="px4_offboard", executable="control", prefix="gnome-terminal --", name="gnome_controller"),
             
             # Bridge tra /fmu e il terminale di controllo
             Node(package="px4_offboard", executable="velocity_control", name="velocity_controller"),
@@ -30,7 +36,7 @@ def generate_launch_description():
 
             # RVIZ2 Visualizer
             Node(package="rviz2", executable="rviz2", arguments=[
-                 '-d', ['/home/user_thesis/ros2_px4_quadcopter_controller_ws/src/ROS2_PX4_Quadcopter_Controller/px4_offboard/resource/visualize.rviz']
+                '-d', [os.path.join('/home', dev_name, ws_name, 'ros2_px4_quadcopter_controller_ws', 'src', 'ROS2_PX4_Quadcopter_Controller', 'px4_offboard', 'resource', 'visualize.rviz')]
             ]),
 
             # Grafo di nodi e topic
