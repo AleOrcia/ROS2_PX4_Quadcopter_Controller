@@ -9,7 +9,7 @@ ws_name = os.getenv('WS_NAME')    # docker_ws
 def generate_launch_description():
     nodes = [
             # PX4 <-> ROS2 bridge
-            ExecuteProcess(name="MicroXRCEAgent", cmd=["MicroXRCEAgent", "udp4", "-p", "8888"], shell=True),
+            ExecuteProcess(name="MicroXRCEAgent", cmd=["MicroXRCEAgent", "udp4", "-p", "8888"]),
 
             #Forward topic di Gazebo su topic ROS2 per velocità motori
             Node(package="ros_gz_bridge", executable="parameter_bridge", name="BridgeGZTopicToRos", arguments=[
@@ -19,15 +19,15 @@ def generate_launch_description():
             # PX4 simulator + Gazebo
             ExecuteProcess(
                 name="PX4",
-                cmd=["make", "-C", os.path.join('/home', os.getenv('DEV_NAME'), 'PX4-Autopilot'), "HEADLESS=1", "px4_sitl", "gz_x500"], prefix="gnome-terminal --", shell=True
+                cmd=["make", "-C", os.path.join('/home', dev_name, ws_name, 'PX4-Autopilot'), "HEADLESS=1", "px4_sitl", "gz_x500"], prefix="gnome-terminal -- "
             ),
-        
+
             # WebSocket server su porta 9090
             Node(package="rosbridge_server", executable="rosbridge_websocket", name="rosbridge"),
 
             # Terminale di controllo
-            Node(package="px4_offboard", executable="control", prefix="gnome-terminal --", name="gnome_controller"),
-            
+            Node(package="px4_offboard", executable="control", prefix="gnome-terminal -- ", name="gnome_controller"),
+
             # Bridge tra /fmu e il terminale di controllo
             Node(package="px4_offboard", executable="velocity_control", name="velocity_controller"),
 
